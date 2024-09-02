@@ -53,8 +53,6 @@ export class SetupGitnessStack extends cdk.Stack {
     );
 
 
-
-
     const fileSystem = new efs.FileSystem(this, "EfsFileSystem", {
       vpc,
       securityGroup: webSecurityGroup
@@ -124,7 +122,7 @@ export class SetupGitnessStack extends cdk.Stack {
     const container = taskDefinition.addContainer('defaultContainer', containerDefinition);
     container.addPortMappings({
       containerPort: 3000,
-      hostPort: 80,
+      hostPort: 3000,
       protocol: ecs.Protocol.TCP,
     });
     container.addMountPoints({
