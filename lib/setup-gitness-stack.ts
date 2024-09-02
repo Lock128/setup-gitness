@@ -93,6 +93,7 @@ export class SetupGitnessStack extends cdk.Stack {
       memoryMiB: '512',
       cpu: '256',
     });
+    fileSystem.grantRootAccess(taskDefinition.taskRole);
 
     taskDefinition.addContainer('defaultContainer', {
       image: ecs.ContainerImage.fromRegistry('harness/gitness'),
