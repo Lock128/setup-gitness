@@ -52,6 +52,8 @@ export class SetupGitnessStack extends cdk.Stack {
       ec2.Port.tcp(2049) // Enable NFS service within security group
     );
 
+    
+
 
     const fileSystem = new efs.FileSystem(this, "EfsFileSystem", {
       vpc,
@@ -121,6 +123,7 @@ export class SetupGitnessStack extends cdk.Stack {
       taskDefinition: taskDefinition,
       securityGroups: [webSecurityGroup]
     });
+    service.loadBalancer.loadBalancerSecurityGroups.forEach(securityGroup => webSecurityGroup.addIngressRule(ec2.Peer.securityGroupId(securityGroup), ec2.Port.tcp(80)));
   }
 
 }
