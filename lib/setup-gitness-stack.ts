@@ -119,6 +119,7 @@ export class SetupGitnessStack extends cdk.Stack {
       cpu: 256,
       desiredCount: 1,
       taskDefinition: taskDefinition,
+      securityGroups: [webSecurityGroup]
     });
   }
 
