@@ -96,7 +96,7 @@ export class SetupGitnessStack extends cdk.Stack {
     });
     fileSystem.grantRootAccess(taskDefinition.taskRole);
 
-    taskDefinition.addContainer('defaultContainer', {
+    const containerDefinition = {
       image: ecs.ContainerImage.fromRegistry('harness/gitness'),
       logging: new ecs.AwsLogDriver({
         streamPrefix: 'gitness',
@@ -105,7 +105,9 @@ export class SetupGitnessStack extends cdk.Stack {
       environment: {
         'GITNESS_URL_BASE': 'http://setupg-gitne-ogolf6qwikx9-33268151.eu-central-1.elb.amazonaws.com/'
       }
-    }).addPortMappings({
+    };
+
+    taskDefinition.addContainer('defaultContainer', containerDefinition).addPortMappings({
       containerPort: 3000,
     });
 
@@ -130,6 +132,10 @@ export class SetupGitnessStack extends cdk.Stack {
       securityGroups: [webSecurityGroup]
     });
     //service.loadBalancer.loadBalancerSecurityGroups.forEach(securityGroup => webSecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(80)));
+
+    containerDefinition.environment = {
+      'GITNESS_URL_BASE': 'http://'+service.loadBalancer.loadBalancerDnsName
+    }
   }
 
 }
