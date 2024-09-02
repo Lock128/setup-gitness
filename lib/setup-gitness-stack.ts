@@ -123,7 +123,7 @@ export class SetupGitnessStack extends cdk.Stack {
       taskDefinition: taskDefinition,
       securityGroups: [webSecurityGroup]
     });
-    service.loadBalancer.loadBalancerSecurityGroups.forEach(securityGroup => webSecurityGroup.addIngressRule(ec2.Peer.securityGroupId(securityGroup), ec2.Port.tcp(80)));
+    service.loadBalancer.loadBalancerSecurityGroups.forEach(securityGroup => webSecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(80)));
   }
 
 }
