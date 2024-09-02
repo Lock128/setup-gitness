@@ -106,6 +106,7 @@ export class SetupGitnessStack extends cdk.Stack {
     const volume = {
       // Use an Elastic FileSystem
       name: "data",
+      configuredAtLaunch: true,
       efsVolumeConfiguration
     };
     taskDefinition.addVolume(volume);
