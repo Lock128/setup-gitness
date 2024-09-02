@@ -104,20 +104,29 @@ export class SetupGitnessStack extends cdk.Stack {
       workingDirectory: '/data',
       environment: {
         'GITNESS_URL_BASE': 'http://setupg-gitne-ogolf6qwikx9-33268151.eu-central-1.elb.amazonaws.com'
+        
       }
     };
-
-    taskDefinition.addContainer('defaultContainer', containerDefinition).addPortMappings({
-      containerPort: 3000,
+/*
+    container.addMountPoints({
+      sourceVolume: assetVolume.name,
+      containerPath: "/mnt/assets",
+      readOnly: false,
     });
-
+    */
+    
     const volume = {
       // Use an Elastic FileSystem
       name: "data",
       efsVolumeConfiguration
     };
     taskDefinition.addVolume(volume);
-
+    const container = taskDefinition.addContainer('defaultContainer', containerDefinition);
+    container.addMountPoints({
+      sourceVolume: volume.name,
+      containerPath: "/data",
+      readOnly: false,
+    });
 
     // Create higher level construct containing the Fargate service with a load balancer
     const service = new ecspatterns.ApplicationLoadBalancedFargateService(this, 'gitness-service', {
