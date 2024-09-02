@@ -52,7 +52,7 @@ export class SetupGitnessStack extends cdk.Stack {
       ec2.Port.tcp(2049) // Enable NFS service within security group
     );
 
-    
+
 
 
     const fileSystem = new efs.FileSystem(this, "EfsFileSystem", {
@@ -92,7 +92,7 @@ export class SetupGitnessStack extends cdk.Stack {
       compatibility: ecs.Compatibility.FARGATE,
       memoryMiB: '512',
       cpu: '256',
-      
+
     });
     fileSystem.grantRootAccess(taskDefinition.taskRole);
 
@@ -134,8 +134,10 @@ export class SetupGitnessStack extends cdk.Stack {
     //service.loadBalancer.loadBalancerSecurityGroups.forEach(securityGroup => webSecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(80)));
 
     containerDefinition.environment = {
-      'GITNESS_URL_BASE': 'http://'+service.loadBalancer.loadBalancerDnsName
+      'GITNESS_URL_BASE': 'http://' + service.loadBalancer.loadBalancerDnsName
     }
+
+    //force redeploy
   }
 
 }
