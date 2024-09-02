@@ -122,6 +122,11 @@ export class SetupGitnessStack extends cdk.Stack {
     };
     taskDefinition.addVolume(volume);
     const container = taskDefinition.addContainer('defaultContainer', containerDefinition);
+    container.addPortMappings({
+      containerPort: 3000,
+      hostPort: 80,
+      protocol: ecs.Protocol.TCP,
+    });
     container.addMountPoints({
       sourceVolume: volume.name,
       containerPath: "/data",
