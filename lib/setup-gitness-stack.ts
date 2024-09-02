@@ -28,7 +28,7 @@ export class SetupGitnessStack extends cdk.Stack {
         },
         {
           cidrMask: 20,
-          name: 'gitness-ata',
+          name: 'gitness-data',
           subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
         },
       ],
@@ -92,6 +92,7 @@ export class SetupGitnessStack extends cdk.Stack {
       compatibility: ecs.Compatibility.FARGATE,
       memoryMiB: '512',
       cpu: '256',
+      
     });
     fileSystem.grantRootAccess(taskDefinition.taskRole);
 
@@ -101,6 +102,9 @@ export class SetupGitnessStack extends cdk.Stack {
         streamPrefix: 'gitness',
       }),
       workingDirectory: '/data',
+      environment: {
+        'GITNESS_URL_BASE': 'http://setupg-gitne-ogolf6qwikx9-33268151.eu-central-1.elb.amazonaws.com/'
+      }
     }).addPortMappings({
       containerPort: 3000,
     });
