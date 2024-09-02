@@ -98,7 +98,8 @@ export class SetupGitnessStack extends cdk.Stack {
       image: ecs.ContainerImage.fromRegistry('harness/gitness'),
       logging: new ecs.AwsLogDriver({
         streamPrefix: 'gitness',
-      })
+      }),
+      workingDirectory: '/data',
     }).addPortMappings({
       containerPort: 3000,
     });
@@ -106,7 +107,6 @@ export class SetupGitnessStack extends cdk.Stack {
     const volume = {
       // Use an Elastic FileSystem
       name: "data",
-      configuredAtLaunch: true,
       efsVolumeConfiguration
     };
     taskDefinition.addVolume(volume);
