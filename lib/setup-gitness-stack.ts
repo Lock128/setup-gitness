@@ -103,7 +103,7 @@ export class SetupGitnessStack extends cdk.Stack {
       }),
       workingDirectory: '/data',
       environment: {
-        'GITNESS_URL_BASE': 'http://setupg-gitne-ogolf6qwikx9-33268151.eu-central-1.elb.amazonaws.com/'
+        'GITNESS_URL_BASE': 'http://setupg-gitne-ogolf6qwikx9-33268151.eu-central-1.elb.amazonaws.com'
       }
     };
 
@@ -133,9 +133,6 @@ export class SetupGitnessStack extends cdk.Stack {
     });
     //service.loadBalancer.loadBalancerSecurityGroups.forEach(securityGroup => webSecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(80)));
 
-    containerDefinition.environment = {
-      'GITNESS_URL_BASE': 'http://' + service.loadBalancer.loadBalancerDnsName
-    }
 
     //force redeploy
   }
