@@ -19,3 +19,4 @@ new SetupGitnessStack(app, 'SetupGitnessStack', {
 
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
 });
+// force redeployment
