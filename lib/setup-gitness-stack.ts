@@ -101,7 +101,7 @@ export class SetupGitnessStack extends cdk.Stack {
       }),
       workingDirectory: '/data',
       environment: {
-        'GITNESS_URL_BASE': 'http://setupg-gitne-ogolf6qwikx9-33268151.eu-central-1.elb.amazonaws.com'
+        'GITNESS_URL_BASE': 'http://setupg-gitne-jqkwyo8cump4-837341227.eu-central-1.elb.amazonaws.com'
         
       }
     };
