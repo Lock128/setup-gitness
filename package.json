@@ -1,8 +1,8 @@
 {
-  "name": "setup-gitness",
+  "name": "setup-harness",
   "version": "0.1.0",
   "bin": {
-    "setup-gitness": "bin/setup-gitness.js"
+    "setup-harness": "bin/setup-harness.js"
   },
   "scripts": {
     "build": "tsc",

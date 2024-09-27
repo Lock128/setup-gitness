@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts bin/setup-gitness.ts",
+  "app": "npx ts-node --prefer-ts-exts bin/setup-harness.ts",
   "watch": {
     "include": [
       "**"

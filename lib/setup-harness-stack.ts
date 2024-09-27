@@ -11,39 +11,39 @@ export class SetupGitnessStack extends cdk.Stack {
     super(scope, id, props);
 
     // Create a VPC with 9x subnets divided over 3 AZ's
-    const vpc = new ec2.Vpc(this, 'GitnessVPC', {
+    const vpc = new ec2.Vpc(this, 'HarnessVPC', {
       cidr: '172.32.0.0/16',
       natGateways: 1,
       maxAzs: 3,
       subnetConfiguration: [
         {
           cidrMask: 20,
-          name: 'gitness-public',
+          name: 'harness-public',
           subnetType: ec2.SubnetType.PUBLIC,
         },
         {
           cidrMask: 20,
-          name: 'gitness-application',
+          name: 'harness-application',
           subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
         },
         {
           cidrMask: 20,
-          name: 'gitness-data',
+          name: 'harness-data',
           subnetType: ec2.SubnetType.PRIVATE_ISOLATED,
         },
       ],
     });
 
     // Create an ECS cluster
-    const cluster = new ecs.Cluster(this, 'gitness-service-cluster', {
-      clusterName: 'gitness-service-cluster',
+    const cluster = new ecs.Cluster(this, 'harness-service-cluster', {
+      clusterName: 'harness-service-cluster',
       containerInsights: true,
       vpc: vpc,
     });
 
 
-    const webSecurityGroup = new ec2.SecurityGroup(this, "gitness-web-sg", {
-      securityGroupName: `Gitness-Web-app`,
+    const webSecurityGroup = new ec2.SecurityGroup(this, "harness-web-sg", {
+      securityGroupName: `Harness-Web-app`,
       vpc,
     });
 
@@ -81,12 +81,9 @@ export class SetupGitnessStack extends cdk.Stack {
       transitEncryption: 'ENABLED',
     };
 
+    //https://hub.docker.com/r/harness/harness
 
-    //https://hub.docker.com/r/harness/gitness
-    const image = ecs.ContainerImage.fromRegistry('harness/gitness');
-
-
-    const taskDefinition = new ecs.TaskDefinition(this, 'gitness-web-task', {
+    const taskDefinition = new ecs.TaskDefinition(this, 'harness-web-task', {
       compatibility: ecs.Compatibility.FARGATE,
       memoryMiB: '512',
       cpu: '256',
@@ -95,13 +92,13 @@ export class SetupGitnessStack extends cdk.Stack {
     fileSystem.grantRootAccess(taskDefinition.taskRole);
 
     const containerDefinition = {
-      image: ecs.ContainerImage.fromRegistry('harness/gitness'),
+      image: ecs.ContainerImage.fromRegistry('harness/harness'),
       logging: new ecs.AwsLogDriver({
-        streamPrefix: 'gitness',
+        streamPrefix: 'harness',
       }),
       workingDirectory: '/data',
       environment: {
-        'GITNESS_URL_BASE': 'http://setupg-gitne-jqkwyo8cump4-837341227.eu-central-1.elb.amazonaws.com'
+        'HARNESS_URL_BASE': 'http://setupg-gitne-jqkwyo8cump4-837341227.eu-central-1.elb.amazonaws.com'
         
       }
     };
@@ -132,7 +129,7 @@ export class SetupGitnessStack extends cdk.Stack {
     });
 
     // Create higher level construct containing the Fargate service with a load balancer
-    const service = new ecspatterns.ApplicationLoadBalancedFargateService(this, 'gitness-service', {
+    const service = new ecspatterns.ApplicationLoadBalancedFargateService(this, 'harness-service', {
       cluster,
       circuitBreaker: {
         rollback: true,

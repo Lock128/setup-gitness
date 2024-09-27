@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { SetupGitnessStack } from '../lib/setup-gitness-stack';
+import { SetupHarnessStack } from '../lib/setup-harness-stack';
 
 const app = new cdk.App();
-new SetupGitnessStack(app, 'SetupGitnessStack', {
+new SetupHarnessStack(app, 'SetupHarnessStack', {
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */
