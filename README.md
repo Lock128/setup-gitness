@@ -1,14 +1,14 @@
-# Setting up Gitness on AWS ECS as a service
+# Setting up Harness on AWS ECS as a service
 
-This project sets up [Gitness](https://github.com/harness/gitness) on Amazon ECS Fargate running as a service using for CDK development with TypeScript.
+This project sets up [Harness](https://github.com/harness/harness) on Amazon ECS Fargate running as a service using for CDK development with TypeScript.
 
 
-## What is Gitness?
-Gitness is an open source development platform packed with the power of code hosting and automated DevOps pipelines.
+## What is Harness?
+Harness is an open source development platform packed with the power of code hosting and automated DevOps pipelines.
 
 You can use it as your self-hosted version of the now deprecated AWS CodeCommit.
 
-The functionalities of "Pipelines" and "Gitspaces" - which are a functionality of Gitness - are currently **NOT** supported when running Gitness on Amazon ECS as they require a Docker daemon and thats not supported by Fargate.
+The functionalities of "Pipelines" and "Gitspaces" - which are a functionality of Harness - are currently **NOT** supported when running Harness on Amazon ECS as they require a Docker daemon and thats not supported by Fargate.
 
 ## Pre-Requisites
 - Set up an AWS account
@@ -22,8 +22,8 @@ The functionalities of "Pipelines" and "Gitspaces" - which are a functionality o
 Once you push a change to your `main` branch a Github action will automatically deploy the CDK code.
 
 ## What will be deployed?
-CDK will deploy [lib\setup-gitness-stack.ts](lib\setup-gitness-stack.ts) which includes:
-- an Amazon ECS Service that runs the latest official [Gitness container image](https://hub.docker.com/r/harness/gitness)
+CDK will deploy [lib\setup-harness-stack.ts](lib\setup-harness-stack.ts) which includes:
+- an Amazon ECS Service that runs the latest official [Harness container image](https://hub.docker.com/r/harness/harness)
 - an Amazon EFS that is used to store data
 
 Expected costs: [48 USD/month](https://calculator.aws/#/estimate?id=970c8026a305dd39246aa7d2665d5d398ad108d7) (when running in eu-central-1)
