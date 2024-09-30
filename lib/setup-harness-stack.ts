@@ -98,8 +98,8 @@ export class SetupHarnessStack extends cdk.Stack {
       }),
       workingDirectory: '/data',
       environment: {
-        'HARNESS_URL_BASE': 'http://setuph-harne-cmngr06fggq4-1705612358.eu-central-1.elb.amazonaws.com',
-        'GITNESS_URL_BASE': 'http://setuph-harne-cmngr06fggq4-1705612358.eu-central-1.elb.amazonaws.com'
+        'HARNESS_URL_BASE': 'http://setuph-harne-jdifbs5oqfur-1906581189.eu-central-1.elb.amazonaws.com',
+        'GITNESS_URL_BASE': 'http://setuph-harne-jdifbs5oqfur-1906581189.eu-central-1.elb.amazonaws.com'
         
       }
     };
